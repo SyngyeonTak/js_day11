@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <script>
+        var wrapper;
+        var cellWidth = 40; //셀의 너비
+        var cellHeight = 40; //셀의 높이
+        var row = 20;
+        var col = 20;
+        
+        var x = 0;
+        var st;
+        var cellArray = new Array(row*col);//모든 셀을 순서있게 담아놓을 배열 선언
+        //액자 만들기
+        function createFrame(){
+            wrapper = document.createElement("div");
+            wrapper.style.margin = "auto";
+            wrapper.style.background = "dodgerblue";
+            wrapper.style.overflow = "hidden";
+            wrapper.style.width = col*cellWidth +"px";
+            wrapper.style.height = row*cellHeight +"px";
+            wrapper.style.backgroundImage = "url(../img/travel/1.jpg)";
+            wrapper.style.backgroundSize =parseInt(wrapper.style.width)+"px "
+                                                        +parseInt(wrapper.style.height)+"px";
+            document.body.appendChild(wrapper);
+        }
+
+        //셀 생성
+        function createCell(){
+            var n =0;
+            for(var j =0; j<row; j++){
+                for(var i =0; i<col; i++){
+                    var cell = document.createElement("div"); //<div></div>
+                    cell.style.width =  cellWidth + "px";
+                    cell.style.height =  cellHeight + "px";
+                    cell.style.border = "1px solid red"; //border는 크기에 영향을 준다.
+                    cell.style.boxSizing = "border-box";
+                    cell.style.background = "yellow";
+                    cell.style.opacity = 1;//불투명해야 사진을 가린다.
+                    cell.style.float = "left"; //div 띄우기
+
+                    cell.addEventListener("click", function(){
+                        //콜백함수 내에서는 이벤트를 발생시킨 주체 컴포넌트를
+                        //사용할 수 있다.. 이때 사용되는 this란 변수이며, 이 변수명은
+                        //이미 시스템에서 정해놓은 것이다. 즉, 물체를 가리키는 
+                        //변수이다.
+                        this.style.opacity = 0;    
+                    });
+
+                    wrapper.appendChild(cell);
+                    cellArray[n] = cell;
+                    
+                    n++;
+                }
+            }
+        }
+
+        function createButton(){
+            var bt = document.createElement("button");
+            bt.innerText = "사라지게하기";
+
+            bt.addEventListener("click", function(){
+                st = setInterval("disappear()", 10);
+            });
+
+            document.body.appendChild(bt);
+
+        }
+        function disappear(){
+                
+            cellArray[x].style.opacity = 0;
+
+            if(x < cellArray.length-1){
+                x++; //98 -> 99까지만 x를 증가시켜줌
+            }
+
+        }
+
+        function init(){
+            createFrame();
+            createCell();
+            createButton();
+        }
+
+        window.addEventListener("load", function(){
+            init();
+        });
+
+    </script>
+</head>
+<body>
+</body>
+</html>

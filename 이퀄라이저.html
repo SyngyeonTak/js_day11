@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <script src = "../js/lib.js"></script>
+    <style>
+        #wrapper{
+            width: 700px;
+            height: 600px;
+            border: 2px solid red;
+            position: relative;
+            margin: auto;
+        }
+    </style>
+    <script>
+        var arrBar = new Array(7);
+        var color = new Array(7);
+        color[0] = "red";
+        color[1] = "orange";
+        color[2] = "yellow";
+        color[3] = "green";
+        color[4] = "blue";
+        color[5] = "navy";
+        color[6] = "purple";
+
+        var a = 0.1;
+        var targetH = 20;
+        var wrapper;
+        var flag = false;
+        var cnt = 0;
+
+        //막대생성
+        function createBar(){
+            wrapper = document.getElementById("wrapper");
+
+            for(var i = 0; i<arrBar.length; i++){
+                arrBar[i] = document.createElement("div");
+                arrBar[i].style.position = "absolute";
+                arrBar[i].style.left = i*50+"px";
+                arrBar[i].style.top = 0 + "px";
+                arrBar[i].style.width = 50 + "px";
+                arrBar[i].style.height = 10+"px";
+                arrBar[i].style.borderRadius = "4px";
+                arrBar[i].style.background = color[i];
+
+                wrapper.appendChild(arrBar[i]);
+
+                //막대에 마우스 이벤트 구현하기
+                // arrBar[i].addEventListener("mouseover", function(){
+                //     targetH = getRandom(500);
+                // });
+            }
+        }
+
+        function createButton(){
+            var bt = document.createElement("button");
+            bt.innerText = "이퀄라이저";
+
+            bt.addEventListener("click", function(){
+                flag = !flag;
+                // targetH = getRandom(500);
+                cnt++;
+            });
+
+            document.body.appendChild(bt);
+        }
+
+        //막대크기 변경 함수
+        function move(){
+            var index = getRandom(arrBar.length-1);
+            
+            arrBar[index].style.height = parseFloat(arrBar[index].style.height)+a*(getRandom(500)-parseFloat(arrBar[index].style.height))+"px";
+            arrBar[index].innerText = parseFloat(arrBar[index].style.height);
+            
+            
+        }
+
+        function init(){
+            createBar();
+            createButton();
+        }
+
+        window.addEventListener("load", function(){
+            init();
+            setInterval("move()", 5);
+        });
+    </script>
+</head>
+<body>
+    <div id = "wrapper"></div>
+</body>
+</html>

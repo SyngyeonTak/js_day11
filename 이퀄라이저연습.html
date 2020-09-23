@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <script src = "../js/lib.js"></script>
+    <style>
+        #wrapper{
+            width: 700px;
+            height: 600px;
+            border: 2px solid red;
+            position: relative;
+            margin: auto;
+        }
+    </style>
+    <script>
+        var bar;
+        var barArray = new Array();
+
+        //배열 선언과 동시에 초기화가 가능하다.
+        var colorArray = ["red", "orange", "yellow", "green", "blue", "navy", "purple"];
+
+        var a = 0.1;
+        var barWidth = 65;
+        var targetH = 20;
+        var wrapper;
+        var flag = false;
+        var cnt = 0;
+
+        //막대생성
+        function createBar(){
+            wrapper = document.getElementById("wrapper");
+
+            for(var i = 0; i<7; i++){
+                bar = document.createElement("div");
+                bar.style.position = "absolute";
+                bar.style.left = barWidth*i+"px";
+                bar.style.top = 0 + "px";
+                bar.style.width = barWidth + "px";
+                bar.style.height = 10+"px";
+                bar.style.borderRadius = "4px";
+                bar.style.background = colorArray[i];
+
+                wrapper.appendChild(bar);
+
+                //사이즈가 0인 배열에, 방금 생성된 바를 추가하자.
+                //개발자가 그 크기를 정해놓지 못할 경우에 아주 유용하다.
+                //ex)채팅 서버 구축 시 사용자가 몇명이 들어올 지 알수가 없다.
+                barArray.push(bar);
+            }
+        }
+
+        function createButton(){
+            var bt = document.createElement("button");
+            bt.innerText = "이퀄라이저";
+
+            bt.addEventListener("click", function(){
+                flag = !flag;
+                // targetH = getRandom(500);
+                cnt++;
+            });
+
+            document.body.appendChild(bt);
+        }
+
+        //막대크기 변경 함수
+        function move(){
+            if(flag){
+                // for(var i =0; i<arrBar.length; i++){
+                    bar.style.height = parseFloat(bar.style.height)+a*(getRandom(500)-parseFloat(bar.style.height))+"px";
+                   bar.innerText = parseFloat(bar.style.height);
+                    // if(cnt != 0){
+                    //     targetH = getRandom(500);
+                    // }
+                }
+            // }
+        }
+
+        function init(){
+            createBar();
+            createButton();
+        }
+
+        window.addEventListener("load", function(){
+            
+            // colorArray[0] = "red";
+            // colorArray[1] = "orange";
+            // colorArray[2] = "yellow";
+            // colorArray[3] = "green";
+            // colorArray[4] = "blue";
+            // colorArray[5] = "navy";
+            // colorArray[6] = "purple";
+            init();
+            // setInterval("move()", 10)
+        });
+    </script>
+</head>
+<body>
+    <div id = "wrapper"></div>
+</body>
+</html>
